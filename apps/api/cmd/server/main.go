@@ -6,8 +6,12 @@ import (
 	"net/http"
 
 	"github.com/Dr-Ai-0018/Terraweave/apps/api/internal/ai"
+	"github.com/Dr-Ai-0018/Terraweave/apps/api/internal/cache"
 	"github.com/Dr-Ai-0018/Terraweave/apps/api/internal/config"
 	"github.com/Dr-Ai-0018/Terraweave/apps/api/internal/modalgpu"
+	"github.com/Dr-Ai-0018/Terraweave/apps/api/internal/storage"
+	"github.com/Dr-Ai-0018/Terraweave/apps/api/internal/store"
+	"github.com/Dr-Ai-0018/Terraweave/apps/api/internal/system"
 )
 
 func main() {
@@ -19,10 +23,44 @@ func main() {
 		Models:       cfg.AIModels,
 	})
 
+	dbStore, err := store.Open(cfg.DatabaseURL)
+	if err != nil {
+		log.Printf("postgis disabled: %v", err)
+	}
+	defer func() {
+		if err := dbStore.Close(); err != nil {
+			log.Printf("close postgis: %v", err)
+		}
+	}()
+
+	redisCache, err := cache.Open(cfg.RedisURL)
+	if err != nil {
+		log.Printf("redis disabled: %v", err)
+	}
+	defer func() {
+		if err := redisCache.Close(); err != nil {
+			log.Printf("close redis: %v", err)
+		}
+	}()
+
+	objectStorage, err := storage.Open(cfg.S3)
+	if err != nil {
+		log.Printf("minio disabled: %v", err)
+	}
+	systemChecker := system.NewChecker(dbStore, redisCache, objectStorage)
+
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /healthz", writeJSONHandler(func() any {
 		return ai.NewHealth()
 	}))
+	mux.HandleFunc("GET /v1/system/status", func(w http.ResponseWriter, r *http.Request) {
+		status := systemChecker.Check(r.Context())
+		if !status.OK {
+			writeJSON(w, http.StatusServiceUnavailable, status)
+			return
+		}
+		writeJSON(w, http.StatusOK, status)
+	})
 	mux.HandleFunc("GET /v1/models", writeJSONHandler(func() any {
 		return map[string]any{
 			"object":        "list",

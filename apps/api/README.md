@@ -19,10 +19,22 @@ The API does not use an OpenAI SDK. It uses direct HTTP requests so OpenAI-compa
 
 ```text
 GET  /healthz
+GET  /v1/system/status
 GET  /v1/models
 GET  /v1/modal/gpus
 POST /v1/responses
 ```
+
+## System Status
+
+`GET /v1/system/status` checks the local platform dependencies:
+
+- API process.
+- PostGIS through `TERRAWEAVE_DATABASE_URL`.
+- Redis through `TERRAWEAVE_REDIS_URL`.
+- MinIO buckets through `TERRAWEAVE_S3_*`.
+
+The API uses the least-privilege database role. A healthy local response should report `postgis.current_user` as `terraweave_app`.
 
 ## Streaming Responses
 
