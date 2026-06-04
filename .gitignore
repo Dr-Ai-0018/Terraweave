@@ -17,11 +17,42 @@ __pycache__/
 .ruff_cache/
 .venv/
 venv/
+.uv-cache/
 
 # Environment and secrets
 .env
 .env.*
 !.env.example
+*.key
+*.pem
+*.crt
+*.p12
+*.pfx
+secrets/
+
+# rclone / cloud credentials
+rclone.conf
+.rclone.conf
+
+# Node / frontend
+node_modules/
+.pnpm-store/
+.npm/
+.yarn/
+coverage/
+*.tsbuildinfo
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Go
+bin/
+*.test
+*.out
+
+# Docker / local infra overrides
+docker-compose.override.yml
 
 # Build/cache output
 dist/
@@ -30,6 +61,8 @@ build/
 .cache/
 tmp/
 temp/
+logs/
+*.log
 
 # Data artifacts
 data/
