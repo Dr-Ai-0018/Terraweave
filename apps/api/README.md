@@ -70,7 +70,6 @@ Known public options:
 T4
 L4
 A10
-A10G
 L40S
 A100
 A100-40GB
@@ -83,4 +82,10 @@ B200
 B200+
 ```
 
-`B200+` is Modal's documented opt-in path for B200 or B300-compatible capacity. `A10G` is included because Modal's playground and A10G article use it directly, even though the main GPU guide lists `A10`.
+Notes:
+
+- `H100!` is a scheduling-specific strict H100 request that disables automatic H200 upgrades.
+- `B200+` is Modal's documented opt-in path for B200 or B300-compatible capacity. It is billed as B200 and requires CUDA 13+ compatibility if Modal places the job on B300.
+- `A100` requests A100 40 GB, but Modal may upgrade it to A100 80 GB at the same GPU cost.
+- Region selection can multiply base prices by `1.5-1.75x`.
+- Non-preemptible execution can multiply base prices by `3x`.
