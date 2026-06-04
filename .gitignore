@@ -1,0 +1,45 @@
+# Local documentation and planning notes
+docs/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Build/cache output
+dist/
+build/
+*.egg-info/
+.cache/
+tmp/
+temp/
+
+# Data artifacts
+data/
+outputs/
+artifacts/
+*.tif
+*.tiff
+*.geotiff
+*.gpkg
+*.mbtiles
+*.parquet
+*.sqlite
+*.sqlite3
