@@ -1,5 +1,6 @@
 # Local documentation and planning notes
 docs/
+local/
 
 # OS/editor noise
 .DS_Store
