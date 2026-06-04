@@ -41,12 +41,19 @@ Non-streaming calls are intentionally not supported. If a caller sends `stream: 
 
 ```text
 TERRAWEAVE_API_ADDR=:8080
+TERRAWEAVE_DATABASE_ADMIN_URL=postgres://terraweave_admin:change_me@127.0.0.1:5432/terraweave?sslmode=disable
+TERRAWEAVE_DATABASE_URL=postgres://terraweave_app:change_me@127.0.0.1:5432/terraweave?sslmode=disable
 TERRAWEAVE_AI_BASE_URL=https://api.openai.com
 TERRAWEAVE_AI_API_KEY=
 TERRAWEAVE_AI_DEFAULT_MODEL=gpt-5.4
 TERRAWEAVE_AI_MODELS=gpt-5.4
 TERRAWEAVE_MODAL_DEFAULT_GPU=L4
 ```
+
+Database role split:
+
+- `TERRAWEAVE_DATABASE_ADMIN_URL`: migrations, schema ownership, extensions, role grants.
+- `TERRAWEAVE_DATABASE_URL`: running API, least-privilege business access.
 
 ## Run
 
