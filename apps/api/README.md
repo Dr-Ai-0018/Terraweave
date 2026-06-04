@@ -43,6 +43,15 @@ Non-streaming calls are intentionally not supported. If a caller sends `stream: 
 TERRAWEAVE_API_ADDR=:8080
 TERRAWEAVE_DATABASE_ADMIN_URL=postgres://terraweave_admin:change_me@127.0.0.1:5432/terraweave?sslmode=disable
 TERRAWEAVE_DATABASE_URL=postgres://terraweave_app:change_me@127.0.0.1:5432/terraweave?sslmode=disable
+TERRAWEAVE_DATABASE_READONLY_URL=postgres://terraweave_readonly:change_me@127.0.0.1:5432/terraweave?sslmode=disable
+TERRAWEAVE_REDIS_URL=redis://:change_me@127.0.0.1:6379/0
+TERRAWEAVE_S3_ENDPOINT=http://127.0.0.1:9000
+TERRAWEAVE_S3_ACCESS_KEY_ID=terraweave-app
+TERRAWEAVE_S3_SECRET_ACCESS_KEY=change_me
+TERRAWEAVE_S3_BUCKET_RAW=terraweave-raw
+TERRAWEAVE_S3_BUCKET_INTERMEDIATE=terraweave-intermediate
+TERRAWEAVE_S3_BUCKET_OUTPUTS=terraweave-outputs
+TERRAWEAVE_S3_BUCKET_MODELS=terraweave-models
 TERRAWEAVE_AI_BASE_URL=https://api.openai.com
 TERRAWEAVE_AI_API_KEY=
 TERRAWEAVE_AI_DEFAULT_MODEL=gpt-5.4
@@ -54,6 +63,7 @@ Database role split:
 
 - `TERRAWEAVE_DATABASE_ADMIN_URL`: migrations, schema ownership, extensions, role grants.
 - `TERRAWEAVE_DATABASE_URL`: running API, least-privilege business access.
+- `TERRAWEAVE_DATABASE_READONLY_URL`: read-only reporting or audit access.
 
 ## Run
 
